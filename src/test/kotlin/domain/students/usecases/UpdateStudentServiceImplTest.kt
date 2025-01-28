@@ -1,9 +1,11 @@
 import com.example.data.students.repos.StudentRepo
 import com.example.domain.students.requests.UpdateRequest
 import com.example.domain.students.usecases.UpdateStudentServiceImpl
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.*
 
 class UpdateStudentServiceImplTest {
 
@@ -12,7 +14,8 @@ class UpdateStudentServiceImplTest {
 
     @BeforeEach
     fun setup() {
-        studentRepo = mock()
+        // Create a mock for the StudentRepo
+        studentRepo = mockk()
         updateStudentService = UpdateStudentServiceImpl(studentRepo)
     }
 
@@ -22,10 +25,13 @@ class UpdateStudentServiceImplTest {
         val id = 1
         val updateRequest = UpdateRequest(userid = 101, username = "Alice Updated")
 
+        // Mock the update function in StudentRepo
+        coEvery { studentRepo.update(id, updateRequest) } returns Unit
+
         // Act
         updateStudentService.invoke(id, updateRequest)
 
         // Assert
-        verify(studentRepo, times(1)).update(id, updateRequest)
+        coVerify { studentRepo.update(id, updateRequest) }  // Verify that the update function was called once
     }
 }

@@ -1,10 +1,12 @@
 import com.example.data.students.repos.StudentRepo
 import com.example.domain.students.entities.Todolist
 import com.example.domain.students.usecases.GetAllStudentServiceImpl
-import org.junit.jupiter.api.Assertions.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.*
+import kotlin.test.assertEquals
 
 class GetAllStudentServiceImplTest {
 
@@ -13,7 +15,8 @@ class GetAllStudentServiceImplTest {
 
     @BeforeEach
     fun setup() {
-        studentRepo = mock()
+        // Create a mock for the StudentRepo
+        studentRepo = mockk()
         getAllStudentService = GetAllStudentServiceImpl(studentRepo)
     }
 
@@ -24,7 +27,7 @@ class GetAllStudentServiceImplTest {
             Todolist(1, 101, "Alice"),
             Todolist(2, 102, "Bob")
         )
-        whenever(studentRepo.fetchAll()).thenReturn(mockStudents)
+        coEvery { studentRepo.fetchAll() } returns mockStudents
 
         // Act
         val result = getAllStudentService.invoke()
@@ -32,6 +35,8 @@ class GetAllStudentServiceImplTest {
         // Assert
         assertEquals(2, result.size)
         assertEquals("Alice", result[0].username)
-        verify(studentRepo, times(1)).fetchAll()
+
+        // Verify that the fetchAll() function was called exactly once
+        coVerify { studentRepo.fetchAll() }
     }
 }

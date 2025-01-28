@@ -1,12 +1,15 @@
-
 import com.example.data.students.repos.StudentRepo
 import com.example.domain.students.entities.Todolist
 import com.example.domain.students.usecases.GetStudentService
 import com.example.exception.StudentNotFoundException
-import org.junit.jupiter.api.Assertions.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNotNull
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.*
 import kotlin.test.assertFailsWith
 
 class GetStudentServiceTest {
@@ -16,7 +19,8 @@ class GetStudentServiceTest {
 
     @BeforeEach
     fun setup() {
-        studentRepo = mock()
+        // Create a mock for the StudentRepo
+        studentRepo = mockk()
         getStudentService = GetStudentService(studentRepo)
     }
 
@@ -25,27 +29,32 @@ class GetStudentServiceTest {
         // Arrange
         val id = 1
         val expectedStudent = Todolist(id, 101, "Alice")
-        whenever(studentRepo.get(id)).thenReturn(expectedStudent)
+        coEvery { studentRepo.get(id) } returns expectedStudent  // Mock the get function
 
         // Act
         val result = getStudentService.invoke(id)
 
         // Assert
-        assertNotNull(result)
-        assertEquals(101, result.userid)
-        assertEquals("Alice", result.username)
-        verify(studentRepo, times(1)).get(id)
+        Assertions.assertNotNull(result)
+        Assertions.assertEquals(101, result.userid)
+        Assertions.assertEquals("Alice", result.username)
+
+        // Verify that the get() function was called exactly once
+        coVerify { studentRepo.get(id) }
     }
 
     @Test
     fun `should throw StudentNotFoundException when student is not found`() {
         // Arrange
         val id = 7
-        whenever(studentRepo.get(id)).thenReturn(null)  // Simulate student not found
+        coEvery { studentRepo.get(id) } returns null  // Simulate student not found
 
         // Act & Assert
         assertFailsWith<StudentNotFoundException> {
             getStudentService.invoke(id)
         }
+
+        // Verify that the get() function was called exactly once
+        coVerify { studentRepo.get(id) }
     }
 }

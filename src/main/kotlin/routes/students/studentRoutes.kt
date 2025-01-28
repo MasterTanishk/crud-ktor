@@ -6,19 +6,19 @@ import io.ktor.server.routing.*
 
 fun Route.studentRoutes(HttpComponent:httpComponent){
     get(""){
-        HttpComponent.getAllStudentService.invoke(call)
+        HttpComponent.getAllStudentService.handleGetAllStudents(call)
     }
     get("/{id}")
     {
-        HttpComponent.getAStudentService.invoke(call)
+        HttpComponent.getAStudentService.handleGetStudent(call)
     }
     post(""){
-        HttpComponent.createStudentService.invoke(call)
+        HttpComponent.createStudentService.handleCreateStudent(call)
     }
     put("/{id}"){
-        HttpComponent.updateStudentService.invoke(call)
+        HttpComponent.updateStudentService.handleUpdateStudent(call)
     }
     delete("/{id}"){
-        HttpComponent.deleteStudentService.invoke(call)
+        HttpComponent.deleteStudentService.handleDeleteStudent(call)
     }
 }
