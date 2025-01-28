@@ -44,15 +44,15 @@ class PostgresTaskRepository @Inject constructor(private val dataSource: DataSou
                     setInt(1, id)
                     executeUpdate()
 //                }
-                // Step 1: Delete the task with the given ID
+
                 connection.prepareStatement("DELETE FROM tasks WHERE id = ?").apply {
                     setInt(1, id)
                     executeUpdate()
                 }
-                connection.commit() // Commit transaction
+                connection.commit()
             } }
             catch (ex: SQLException) {
-                connection.rollback() // Rollback on error
+                connection.rollback()
                 throw ex
             }
         }
