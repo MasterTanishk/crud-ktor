@@ -45,19 +45,15 @@ fun Route.customerRouting(){
             // Find the customer with the given id
             val existingCustomer = customers.find { it.id == id }
 
-            // If customer is not found, return an error message
             if (existingCustomer == null) {
                 return@put call.respondText("No customer found with id $id", status = HttpStatusCode.NotFound)
             }
 
-            // If customer exists, update it with the data from the request body
             val updatedCustomer = call.receive<Customer>()
 
-            // Update the customer in the list
             val index = customers.indexOf(existingCustomer)
             customers[index] = updatedCustomer
 
-            // Respond with success message
             call.respondText("Customer updated successfully", status = HttpStatusCode.OK)
         }
 
