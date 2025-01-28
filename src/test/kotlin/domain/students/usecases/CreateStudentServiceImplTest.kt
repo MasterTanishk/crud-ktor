@@ -24,7 +24,6 @@ class CreateStudentServiceImplTest {
 
     @Test
     fun `should create a student and return it`() {
-        // Arrange
         val request = CreateRequest(userid = 101, username = "Alice")
         val expectedStudent = Todolist(1, 101, "Alice")
 
@@ -41,7 +40,6 @@ class CreateStudentServiceImplTest {
 
     @Test
     fun `should throw exception if student creation fails`() {
-        // Arrange
         val request = CreateRequest(userid = 101, username = "Alice")
 
         coEvery { studentRepo.create(request) } throws IllegalStateException("Failed to create student")

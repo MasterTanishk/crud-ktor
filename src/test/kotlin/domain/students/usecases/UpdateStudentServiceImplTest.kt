@@ -14,24 +14,19 @@ class UpdateStudentServiceImplTest {
 
     @BeforeEach
     fun setup() {
-        // Create a mock for the StudentRepo
         studentRepo = mockk()
         updateStudentService = UpdateStudentServiceImpl(studentRepo)
     }
 
     @Test
     fun `should update a student`() {
-        // Arrange
         val id = 1
         val updateRequest = UpdateRequest(userid = 101, username = "Alice Updated")
 
-        // Mock the update function in StudentRepo
         coEvery { studentRepo.update(id, updateRequest) } returns Unit
 
-        // Act
         updateStudentService.invoke(id, updateRequest)
 
-        // Assert
-        coVerify { studentRepo.update(id, updateRequest) }  // Verify that the update function was called once
+        coVerify { studentRepo.update(id, updateRequest) }
     }
 }

@@ -22,35 +22,20 @@ class DeleteStudentServiceImplTest {
 
     @Test
     fun `should delete a student when id is present`() {
-        // Arrange
         val studentId = 1
         coEvery { studentRepo.delete(studentId) } returns Unit
 
-        // Act
         deleteStudentService.invoke(studentId)
 
-        // Assert
         coVerify(exactly = 1) { studentRepo.delete(studentId) }
     }
 
     @Test
     fun `should throw StudentNotFoundException when id does not exist`() {
-        // Arrange
         val studentId = 997
 
-        // Simulating that the studentRepo does not find the student, so we throw StudentNotFoundException
         coEvery { studentRepo.delete(studentId) } throws StudentNotFoundException()
 
-        // Act & Assert
-//        coVerify {
-//            deleteStudentService.invoke(studentId)
-//        }
-//
-//        // Ensure that the exception is thrown
-//        try {
-//            deleteStudentService.invoke(studentId)
-//        } catch (e: StudentNotFoundException) {
-//            assert(e.message == "Student not found")
-//        }
+
     }
 }
