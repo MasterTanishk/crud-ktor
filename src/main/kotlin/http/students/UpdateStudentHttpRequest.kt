@@ -22,9 +22,7 @@ class UpdateStudentHttpRequest @Inject constructor(
 
             val request = call.receive<UpdateRequest>()
 
-            val domainRequest = studentMapper.toDomain(request)
-
-            val updatedStudent = updateStudentService.updateStudent(id, domainRequest)
+            val updatedStudent = updateStudentService.updateStudent(id, request)
 
             call.respond(HttpStatusCode.OK, updatedStudent)
         } catch (e: IllegalArgumentException) {

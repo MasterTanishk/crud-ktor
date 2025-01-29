@@ -2,11 +2,12 @@ package com.example.domain.students.usecases
 
 import com.example.data.students.repos.StudentRepo
 import com.example.domain.students.entities.Todolist
+import com.example.domain.students.repos.StudentRepositoryContract
 import com.example.exception.StudentNotFoundException
 import javax.inject.Inject
 
-class GetStudentService @Inject constructor(private val sturepo:StudentRepo) {
+class GetStudentService @Inject constructor(private val studentRepositoryContract: StudentRepositoryContract) {
     fun invoke(id:Int):Todolist{
-        return sturepo.get(id)?: throw StudentNotFoundException()
+        return studentRepositoryContract.get(id)
     }
 }

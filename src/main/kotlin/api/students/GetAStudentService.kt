@@ -8,7 +8,6 @@ class GetAStudentService @Inject constructor(
     private val service: GetStudentService
 ) {
     fun getStudent(studentId: Int): Todolist? {
-        // Call the domain layer to fetch the student data
         return service.invoke(studentId)
     }
 }

@@ -5,10 +5,12 @@ import com.example.domain.students.usecases.UpdateStudentServiceImpl
 import javax.inject.Inject
 
 class UpdateStudentService @Inject constructor(
-    private val service: UpdateStudentServiceImpl
+    private val service: UpdateStudentServiceImpl,
+    private val convert: StudentMapper
 ) {
 
     fun updateStudent(id: Int, request: UpdateRequest) {
-        service.invoke(id,request)
+        val conv = convert.toDomain(request)
+        service.invoke(id,conv)
     }
 }
