@@ -14,6 +14,7 @@ class GetAllStudentService @Inject constructor(private val service: GetAllStuden
             return students.map{student -> conv.toApi(student)}
         } catch (e: Exception) {
             throw e
+
         }
     }
 }
