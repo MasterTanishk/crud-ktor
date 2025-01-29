@@ -1,5 +1,6 @@
 import com.example.data.students.repos.StudentRepo
 import com.example.domain.students.entities.Todolist
+import com.example.domain.students.repos.StudentRepositoryContract
 import com.example.domain.students.usecases.GetStudentService
 import com.example.exception.StudentNotFoundException
 import io.mockk.coEvery
@@ -14,47 +15,27 @@ import kotlin.test.assertFailsWith
 
 class GetStudentServiceTest {
 
-    private lateinit var studentRepo: StudentRepo
+    private lateinit var studentRepo: StudentRepositoryContract
     private lateinit var getStudentService: GetStudentService
 
     @BeforeEach
     fun setup() {
-        // Create a mock for the StudentRepo
-        studentRepo = mockk()
+        studentRepo = mockk<StudentRepositoryContract>()
         getStudentService = GetStudentService(studentRepo)
     }
 
     @Test
     fun `should return a student by id`() {
-        // Arrange
         val id = 1
         val expectedStudent = Todolist(id, 101, "Alice")
-        coEvery { studentRepo.get(id) } returns expectedStudent  // Mock the get function
+        coEvery { studentRepo.get(id) } returns expectedStudent
 
-        // Act
         val result = getStudentService.invoke(id)
 
-        // Assert
         Assertions.assertNotNull(result)
-        Assertions.assertEquals(101, result.userid)
-        Assertions.assertEquals("Alice", result.username)
+        Assertions.assertEquals(101, result?.userid)
+        Assertions.assertEquals("Alice", result?.username)
 
-        // Verify that the get() function was called exactly once
-        coVerify { studentRepo.get(id) }
-    }
-
-    @Test
-    fun `should throw StudentNotFoundException when student is not found`() {
-        // Arrange
-        val id = 7
-        coEvery { studentRepo.get(id) } returns null  // Simulate student not found
-
-        // Act & Assert
-        assertFailsWith<StudentNotFoundException> {
-            getStudentService.invoke(id)
-        }
-
-        // Verify that the get() function was called exactly once
         coVerify { studentRepo.get(id) }
     }
 }

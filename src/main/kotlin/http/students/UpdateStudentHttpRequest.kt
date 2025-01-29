@@ -24,7 +24,7 @@ class UpdateStudentHttpRequest @Inject constructor(
 
             val updatedStudent = updateStudentService.updateStudent(id, request)
 
-            call.respond(HttpStatusCode.OK, updatedStudent)
+            call.respond(HttpStatusCode.OK, "updated successfully")
         } catch (e: IllegalArgumentException) {
             call.respond(HttpStatusCode.BadRequest, "Invalid or missing parameters: ${e.message}")
         } catch (e: Exception) {

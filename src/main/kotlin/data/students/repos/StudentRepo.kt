@@ -21,8 +21,8 @@ class StudentRepo @Inject constructor(private val query:RecordQueries ,
         return record.map{mapper.fromRecord(it)}
     }
     fun fetchAll(): List<Todolist> {
-        val records = query.fetchAll()  // Fetch all records from the database
-        return records.map { mapper.fromRecord(it) }  // Convert the records into Todolist entities
+        val records = query.fetchAll()
+        return records.map { mapper.fromRecord(it) }
     }
     fun update(id:Int , req:UpdateRequest){
         query.update(id , req)

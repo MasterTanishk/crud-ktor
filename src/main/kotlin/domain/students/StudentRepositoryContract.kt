@@ -19,7 +19,7 @@ class StudentRepositoryContract @Inject constructor(
     fun fetchAll():List<Todolist>{
         return studentRepo.fetchAll()
     }
-    fun get(id:Int):Todolist{
+    fun get(id:Int):Todolist? {
         return studentRepo.get(id)?:throw StudentNotFoundException()
     }
     fun update(id:Int , req:UpdateRequest){

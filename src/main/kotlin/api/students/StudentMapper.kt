@@ -13,21 +13,15 @@ class StudentMapper @Inject constructor(){
         )
     }
 
-    fun toApi(request: CreateRequest): CreateRequest {
-        return CreateRequest(
+    fun toApi(request: Todolist): Todolist {
+        return Todolist(
+            id = request.id,
             userid = request.userid,
             username = request.username
         )
     }
 
     fun toDomain(request: UpdateRequest): UpdateRequest {
-        return UpdateRequest(
-            userid = request.userid,
-            username = request.username
-        )
-    }
-
-    fun toApi(request: UpdateRequest): UpdateRequest{
         return UpdateRequest(
             userid = request.userid,
             username = request.username

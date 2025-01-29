@@ -7,7 +7,7 @@ import com.example.exception.StudentNotFoundException
 import javax.inject.Inject
 
 class GetStudentService @Inject constructor(private val studentRepositoryContract: StudentRepositoryContract) {
-    fun invoke(id:Int):Todolist{
+    fun invoke(id:Int): Todolist? {
         return studentRepositoryContract.get(id)
     }
 }

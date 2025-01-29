@@ -20,7 +20,7 @@ class DeleteStudentHttpRequest @Inject constructor(
             }
             deleteStudentService.invoke(id)
 
-            call.respond(HttpStatusCode.NoContent, "Student deleted successfully!")
+            call.respond(HttpStatusCode.OK, "Student deleted successfully!")
         } catch (e: IllegalArgumentException) {
             call.respond(HttpStatusCode.BadRequest, "Invalid parameters: ${e.message}")
         } catch (e: Exception) {
