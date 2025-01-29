@@ -39,8 +39,10 @@ class GetStudentServiceTest {
 
     @Test
     fun `should throw StudentNotFoundException when student is not found`() {
+
         val id = 7
         coEvery { studentRepo.get(id) } returns null
+
 
         assertFailsWith<StudentNotFoundException> {
             getStudentService.invoke(id)

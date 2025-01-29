@@ -15,6 +15,7 @@ class GetAllStudentServiceImplTest {
 
     @BeforeEach
     fun setup() {
+
         studentRepo = mockk()
         getAllStudentService = GetAllStudentServiceImpl(studentRepo)
     }
